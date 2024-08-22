@@ -1,20 +1,22 @@
 <?php
 
 namespace App\Models;
+
+use DateTime;
+
 Class Pessoa {
 
     private string $nome;
     private string $cpf;
-    private int $idade;
+    private DateTime $dataNascimento;
 
 
 
 
-
-    public function __construct(string $pNome, string $pCpf, int $pIdade){
+    public function __construct(string $pNome, string $pCpf, DateTime $pDataNascimento){
         $this->setNome($pNome);
         $this->setCpf($pCpf);
-        $this->setIdade($pIdade);
+        $this->dataNascimento = $pDataNascimento;
     }
 
     /**
@@ -45,19 +47,34 @@ Class Pessoa {
     	$this->cpf = $cpf;
     }
 
-    /**
-    * @return int
-    */
-    public function getIdade(): int {
-    	return $this->idade;
-    }
 
     /**
-    * @param int $idade
+    * @return DateTime
     */
-    public function setIdade(int $idade): void {
-    	$this->idade = $idade;
+    public function getDataNascimento(){
+    	return $this->dataNascimento->format('d/m/Y');
     }
+
+    public function getIdade(){
+        date_default_timezone_set('America/Sao_Paulo');
+        $dataAtual = new DateTime(date('d-m-Y'));
+        $Diff = $this->dataNascimento->diff($dataAtual);
+        return $Diff->y;
+    }
+    public function exibirMaiorIdade(){
+        if($this->getIdade()>= 18){
+            $maioridade = "É maior de idade";
+        }
+        else{
+            $maioridade = "É menor de idade";
+        }
+        return $maioridade;
+    }
+    public function exibirDadosPessoa(){
+        $mensagem = "Pessoa: ". $this->getNome() ."; ". $this->getDataNascimento() . "; ". $this->getCpf() . "; ". $this->getIdade() . "; ". $this->exibirMaiorIdade();
+        return $mensagem;
+    }
+
 }
 
 

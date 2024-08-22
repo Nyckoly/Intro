@@ -17,20 +17,19 @@ $produto2->setNome("Coca Cola");
 $produto2->setValor(10.50);
 
 try {
-    $produto2->setValor(-1000); //código que pode causar erro.
+    $produto2->setValor(8); //código que pode causar erro.
 } catch (\Throwable $th) {
     echo $th->getMessage(); //mensagem de erro caso algo inesperado ocorra.
 }
 
-
-$cliente = new Pessoa("Juca","55599988877",41);
-
-
+$dataNascimento = new DateTime('1994-06-25');
+$cliente = new Pessoa("Juca","55599988877",$dataNascimento);
 
 
-echo "O valor do produto ". $produto1->getNome() ." é de R$" . $produto1->getValor().".<br>";
-echo "O valor do produto ". $produto2->getNome() ." é R$" . $produto2->getValor().".<br>";
-echo "Pessoa 1: ". $cliente->getNome() ."; ". $cliente->getIdade() . "; ". $cliente->getCpf();
+
+echo $produto1->exibirDadosProduto() . "<br>";
+echo $produto2->exibirDadosProduto() . "<br>";
+echo $cliente->exibirDadosPessoa() . "<br>";
 
 
 
